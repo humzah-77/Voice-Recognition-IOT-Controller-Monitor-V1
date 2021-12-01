@@ -8,7 +8,7 @@ you must make an API on the cloud website and get the ClienID and ClientSecret(P
 
 **My code has the clientID/Secret omited along with any thingID and PropertyID**
 
-This project is *LUCY* a prototype Python software that controls my Arduino tasks using voice recognition and the Arduino cloud API.
+This project is *LUCY* a prototype Python software that controls my Arduino tasks using voice recognition and the Arduino cloud API. This project currently controls my other IOT projects. You cna find wiring diagrams on my other repositories
 
 # What is used<img width="562" alt="Screen Shot 2021-12-01 at 2 31 40 AM" src="https://user-images.githubusercontent.com/58381410/144190836-588f6000-48ea-4f21-9058-93159d5aa88d.png">
 
@@ -34,7 +34,7 @@ Arduino CLoud API
 
 The code listens for a voice and records it into a string. If the string does not include the name "lucy" in it then it is discarded and the program listens for a new command. If the term lucy is in the command it pases out the name and checks the rest of the string for one of the commands. 
 
-The program currently returns my name, returns 3 different values from the DTH11 temperature and humidity sensor and turns an LED on and off.
+The program currently returns my name, returns 3 different values from the DTH11 temperature and humidity sensor, turns an LED on and off and open and close my lock.
 
 The proram communicates with the arduio through api calls fro the arduino cloud
 
