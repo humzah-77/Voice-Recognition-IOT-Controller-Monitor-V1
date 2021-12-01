@@ -1,4 +1,5 @@
 # Voice-Recognition-IOT-Controller-Monitor-V1
+#LUCY
 **Warning** Must have pyaudio, python speech_recognition and pyttsx3 installed on your machine for this to run
 You must also have an Arduino cloud account along with the plan that allows you to make apis
 
