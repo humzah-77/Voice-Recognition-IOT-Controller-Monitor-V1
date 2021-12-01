@@ -106,18 +106,51 @@ def setapi(status):#send data to api
 	try:
 		if status == 'on':
 			propertyValue = {
+				'value': True,
+				'last_value': False,
+				'max_value': None,
+				'min_value': None,
+				'name': 'openlock',
+				#fill the rest with thing property data
                  #fill this with thing property data
                  }
 			resp = devices.properties_v2_publish('Thing_ID','Variable_ID', propertyValue)#replace with ThingID and VariableID
 			print("Response from server:")
 			return("Lights ON");#what lucy will say
-		else:
+		elif status == 'off':
 			propertyValue = {
+				'value': False,
+				'last_value': True,
+				'max_value': None,
+				'min_value': None,
+				'name': 'openlock',
                  #fill this with thing property data
                  }
 			resp = devices.properties_v2_publish('Thing_ID','Variable_ID', propertyValue)#replace with ThingID and VariableID
 			print("Response from server:")
 			return("Lights Off");
+		else:
+			propertyValue = {#turn lock on 
+                'value': True,
+				'last_value': False,
+				'max_value': None,
+				'min_value': None,
+				'name': 'openlock',
+				#fill the rest with thing property data
+                 }
+			resp = devices.properties_v2_publish('Thing_ID','Variable_ID', propertyValue)
+			print("Response from server:")
+			propertyValue = {#turn lock back off after 3 second
+                'value': False,
+				'last_value': True,
+				'max_value': None,
+				'min_value': None,
+				'name': 'openlock',
+				#fill the rest with thing property data
+                 }
+			resp = devices.properties_v2_publish('Thing_ID','Variable_ID', propertyValue)
+			print("Response from server:")
+			return("Locke Opened");
 	except iot.ApiException as e:
 	    print("An exception occurred: {}".format(e))
 	    
@@ -161,6 +194,6 @@ def main():
 			else:
 				querry1 = 'dont understand'
 
-			speak(str(querry1))#say reply to commands
+			speak(str(querry1))#say reply to User
 
 main()
