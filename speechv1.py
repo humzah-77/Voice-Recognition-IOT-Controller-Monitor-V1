@@ -4,12 +4,18 @@ import speech_recognition as sr
 import pyttsx3
 import os
 import json
-import iot_api_client as iot#imports
-
+import wolframalpha
+import iot_api_client as iot
+import time
+import ssl
+import webbrowser
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
-engine = pyttsx3.init()#set up text to speech
+ssl._create_default_https_context = ssl._create_unverified_context#allow wolframalpha
+app_id = 'APIKEY'#get key from wolfram alpha
+client = wolframalpha.Client(app_id)
+engine = pyttsx3.init()#initialize speak
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[10].id)
 
@@ -171,29 +177,72 @@ def command():#get speech and turn into string
 
 def main():
 	while True:
-		query = command()#get speech command
-		query1 = '0'
-		if 'Lucy' in str(query) or 'Luci' in str(query):#only do action if the name lucy is called
-			print (query)
-			if 'Lucy' in str(query):
-				commands = str(query).replace('Lucy', '')#remove lucy from command
-			if 'Luci' in str(query):
-				commands = str(query).replace('Luci', '')
-			if 'name' in str(commands):
-				querry1 = 'Humzah Okadia'#returns my name
-			elif 'celsius' in str(commands) or 'Celsius' in str(commands):#commands
+		query = str(command()).lower()#turn into lowercase to avoid confusion
+		print(query)#for debugging
+		querry1 = "no answer"#if not changed say no onswer
+		if 'luci' in str(query): 
+			query = str(query).replace('luci', 'lucy')#sometimes reads lucy as luci
+		if 'lucy' in str(query):
+
+			commands = str(query).replace('lucy', '')#remove lucy from command
+			print(commands)
+
+
+			if 'hey ' in commands  or'hi ' in commands or 'hello ' in commands or 'yo ' in commands  or 'what`s up' in commands:
+				querry1 = 'how can I help you, sir'#greetinfs
+
+
+			elif 'thanks ' in commands or 'thank you 'in commands or 'respect ' in commands:
+				querry1 = 'you welcome, sir'#reply to thanks
+
+					#explains what she is 
+			elif commands == ' what were you created for'  or commands ==' who are you' or commands ==' what are you':
+				querry1 = 'My name is Lucy. I am a voice recognition software created by Humzah Okadia to monitor and control his iot devices'
+				#returns her creator
+			elif 'name' in str(commands) or str(commands) == 'who created you' or str(commands) == 'who is your creator':
+				querry1 = 'Humzah Okadia'
+				#manually search wolfram alpha
+			elif 'manual search' in str(commands) or 'manuel search' in str(commands):
+				question = input('Type something to ask wolframalpha: ')
+				res = client.query(question)#get question from terminal
+				try:
+					answer = next(res.results).text
+					print(answer)#ask wolfram
+					querry1 = str(answer)
+				except StopIteration:
+				    querry1 ="No results"
+
+			elif ' answer' in str(commands):#speak your question to wolfram
+				querry1 = str(commands).replace('answer ', '')
+				print(querry1)
+				res = client.query(querry1)
+				try:
+					answer = next(res.results).text
+					print(answer)
+					querry1 = str(answer)
+				except StopIteration:
+				    querry1 ="No results"
+
+			elif 'look up'  in commands:#to googole seach somehting
+				querry1 = commands.replace("look up", "")
+				webbrowser.open_new_tab("https://www.google.com/search?q="+querry1)
+			
+			elif 'celsius' in str(commands):#controls my iot devices
 				querry1 = getapi("temp")
-			elif 'fahrenheit' in str(commands) or 'Fahrenheit' in str(commands):
+			elif 'fahrenheit' in str(commands):
 				querry1 = getapi("temp2")
-			elif 'Humidity' in str(commands) or 'humidity' in str(commands):
+			elif 'humidity' in str(commands):
 				querry1 = getapi("humid")
-			elif 'light on' in str(commands) or 'Light on' in str(commands) or 'Light On' in str(commands) or 'light On' in str(commands):
+			elif 'light on' in str(commands):
 				querry1 = setapi("on")
-			elif 'light off' in str(commands) or 'Light off' in str(commands) or 'Light Off' in str(commands) or 'light Off' in str(commands):
+			elif 'light off' in str(commands):
 				querry1 = setapi("off")
+			elif 'lock' in str(commands):
+				querry1 = setapi("lock")
 			else:
 				querry1 = 'dont understand'
 
-			speak(str(querry1))#say reply to User
+			speak(str(querry1))
+
 
 main()
