@@ -21,6 +21,10 @@ Arduino Nano 33 IOT
 
 DTH11 Temperature and Humidity Sensor
 
+RFID Sensor
+
+12V Solenoid Lock
+
 3 x LED Lights
 
 ## Software
@@ -32,6 +36,8 @@ Arduino IDE
 Arduino Cloud 
 
 Arduino CLoud API
+
+Wolfram Alpha 
 
 # How it works
 
