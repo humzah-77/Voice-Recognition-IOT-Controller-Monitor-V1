@@ -37,7 +37,7 @@ Arduino CLoud API
 
 The code listens for a voice and records it into a string. If the string does not include the name "lucy" in it then it is discarded and the program listens for a new command. If the term lucy is in the command it pases out the name and checks the rest of the string for one of the commands. 
 
-The program currently returns my name, returns 3 different values from the DTH11 temperature and humidity sensor, turns an LED on and off and open and close my lock.
+The program currently returns a few replies, my name, the programs task, answer a multitude of questions using wolfram alpha(math,finance,word, and more), does google lookups, returns 3 different values from the DTH11 temperature and humidity sensor, turns an LED on and off and open and close my lock.
 
 The proram communicates with the arduio through api calls fro the arduino cloud
 
